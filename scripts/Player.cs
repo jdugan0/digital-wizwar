@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Player : Node
+public partial class Player : Node2D
 {
     Tile wizardTile;
     Tile selected;
@@ -12,7 +12,11 @@ public partial class Player : Node
 
     public override void _Process(double delta)
     {
-        base._Process(delta);
+        if (Input.IsActionJustReleased("UP"))
+        {
+            GD.Print(wizardTile != null);
+            ((Wizard)wizardTile.getTileData()).Move(Vector2I.Up, wizardTile);
+        }
     }
 
 

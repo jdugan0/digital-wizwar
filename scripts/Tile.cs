@@ -2,16 +2,19 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public partial class Tile : Node2D
+public partial class Tile : Sprite2D
 {
     private Vector2I gridPosition;
-    private TileData data;
+    [Export] private TileData data;
     public Dictionary<string, Variant> properties = new Dictionary<string, Variant>();
     public void setPosition(Vector2I newPos)
     {
+        GD.Print(GlobalPosition);
         gridPosition = newPos;
-        GlobalPosition = gridPosition * GameManager.scale - GameManager.origin;
+        GlobalPosition = new Vector2(gridPosition.X, gridPosition.Y) * GameManager.instance.gridScale - GameManager.instance.origin;
+        GD.Print(GlobalPosition);
     }
+
     public Vector2I getPosition()
     {
         return gridPosition;

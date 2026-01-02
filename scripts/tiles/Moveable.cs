@@ -17,6 +17,7 @@ public partial class Moveable : TileData
 
     public override void Init(Tile instance)
     {
+        base.Init(instance);
         instance.properties.Add("movementRemaining", 3);
     }
 

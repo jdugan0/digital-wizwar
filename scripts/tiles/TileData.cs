@@ -9,5 +9,8 @@ public partial class TileData : Resource
     public virtual void OnEnter(Tile tile) { }
     public virtual void OnExit(Tile tile) { }
 
-    public virtual void Init(Tile instance) { }
+    public virtual void Init(Tile instance)
+    {
+        instance.Texture = texture;
+    }
 }

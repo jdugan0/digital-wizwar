@@ -1,15 +1,17 @@
 using Godot;
 using System;
 
-public partial class GameManager : Node
+public partial class GameManager : Node2D
 {
-    public static Vector2 origin;
-    public static Vector2 scale;
-    public static int playerCount = 1;
+    [Export] public Vector2 origin;
+    [Export] public float gridScale;
+    public int playerCount = 1;
     [Export] public PackedScene player;
     private int turnCount = 0;
+    public static GameManager instance;
     public override void _Ready()
     {
+        instance = this;
         for (int i = 0; i < playerCount; i++)
         {
             // init board and wizards. first board initalized is origin.
