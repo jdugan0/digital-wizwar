@@ -9,10 +9,8 @@ public partial class Tile : Sprite2D
     public Dictionary<string, Variant> properties = new Dictionary<string, Variant>();
     public void setPosition(Vector2I newPos)
     {
-        GD.Print(GlobalPosition);
         gridPosition = newPos;
         GlobalPosition = new Vector2(gridPosition.X, gridPosition.Y) * GameManager.instance.gridScale - GameManager.instance.origin;
-        GD.Print(GlobalPosition);
     }
 
     public Vector2I getPosition()

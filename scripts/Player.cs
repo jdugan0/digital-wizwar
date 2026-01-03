@@ -12,10 +12,24 @@ public partial class Player : Node2D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustReleased("UP"))
+        if (selected.getTileData() is Moveable m)
         {
-            GD.Print(wizardTile != null);
-            ((Wizard)wizardTile.getTileData()).Move(Vector2I.Up, wizardTile);
+            if (Input.IsActionJustReleased("UP"))
+            {
+                m.Move(Vector2I.Up, wizardTile);
+            }
+            if (Input.IsActionJustReleased("DOWN"))
+            {
+                m.Move(Vector2I.Down, wizardTile);
+            }
+            if (Input.IsActionJustReleased("LEFT"))
+            {
+                m.Move(Vector2I.Left, wizardTile);
+            }
+            if (Input.IsActionJustReleased("RIGHT"))
+            {
+                m.Move(Vector2I.Right, wizardTile);
+            }
         }
     }
 
