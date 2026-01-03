@@ -16,19 +16,23 @@ public partial class Player : Node2D
         {
             if (Input.IsActionJustReleased("UP"))
             {
-                m.Move(Vector2I.Up, wizardTile);
+                m.Move(Vector2I.Up, selected);
             }
             if (Input.IsActionJustReleased("DOWN"))
             {
-                m.Move(Vector2I.Down, wizardTile);
+                m.Move(Vector2I.Down, selected);
             }
             if (Input.IsActionJustReleased("LEFT"))
             {
-                m.Move(Vector2I.Left, wizardTile);
+                m.Move(Vector2I.Left, selected);
             }
             if (Input.IsActionJustReleased("RIGHT"))
             {
-                m.Move(Vector2I.Right, wizardTile);
+                m.Move(Vector2I.Right, selected);
+            }
+            if (Input.IsActionJustPressed("UNDO"))
+            {
+                m.Undo(selected);
             }
         }
     }
