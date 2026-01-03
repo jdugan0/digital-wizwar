@@ -5,9 +5,9 @@ using Godot;
 [GlobalClass]
 public partial class Moveable : TileData
 {
-    public void Move(Vector2I direction, Tile instance, Player p)
+    public void Move(Vector2I direction, Tile instance, long sender)
     {
-        if ((Player)instance.properties["mover"] != p)
+        if ((long)instance.properties["mover"] != sender)
         {
             return;
         }
@@ -19,8 +19,8 @@ public partial class Moveable : TileData
         Godot.Collections.Array<Vector2I> x = instance
             .properties["history"]
             .As<Godot.Collections.Array<Vector2I>>();
-        x.Add(instance.getPosition());
-        instance.setPosition(instance.getPosition() + direction);
+        x.Add(instance.GetGridPosition());
+        instance.SetGridPosition(instance.GetGridPosition() + direction);
         instance.properties["movementRemaining"] = movementRemaining - 1;
     }
 
@@ -35,7 +35,7 @@ public partial class Moveable : TileData
         }
         Vector2I last = x[x.Count - 1];
         x.RemoveAt(x.Count - 1);
-        instance.setPosition(last);
+        instance.SetGridPosition(last);
 
         int movementRemaining = (int)instance.properties["movementRemaining"];
         instance.properties["movementRemaining"] = movementRemaining + 1;
@@ -54,12 +54,12 @@ public partial class Moveable : TileData
     public override void Init(Tile instance)
     {
         base.Init(instance);
-        instance.properties.Add("movementRemaining", 3);
+        instance.properties.Add("movementRemaining", 20);
         instance.properties.Add("history", new Godot.Collections.Array<Vector2I>());
+        instance.properties.Add("mover", 0L);
     }
 
-    public void SetMover(Player p, Tile instance)
-    {
-        instance.properties.Add("mover", p);
-    }
+    public static long GetMover(Tile t) => (long)t.properties["mover"];
+
+    public static void SetMover(Tile t, long id) => t.properties["mover"] = id;
 }

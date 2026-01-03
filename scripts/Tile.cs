@@ -1,29 +1,41 @@
+using System;
 using Godot;
 using Godot.Collections;
-using System;
 
 public partial class Tile : Sprite2D
 {
     private Vector2I gridPosition;
-    [Export] private TileData data;
+
+    [Export]
+    private TileData data;
     public Dictionary<string, Variant> properties = new Dictionary<string, Variant>();
-    public void setPosition(Vector2I newPos)
+
+    public void Init(Vector2I gridPos, TileData tileData)
     {
-        gridPosition = newPos;
-        GlobalPosition = new Vector2(gridPosition.X, gridPosition.Y) * GameManager.instance.gridScale - GameManager.instance.origin;
+        data = tileData;
+        data.Init(this);
+        SetGridPosition(gridPos);
     }
 
-    public Vector2I getPosition()
+    public void SetGridPosition(Vector2I newPos)
+    {
+        gridPosition = newPos;
+        GlobalPosition =
+            new Vector2(gridPosition.X, gridPosition.Y) * WorldData.instance.gridScale
+            - WorldData.instance.origin;
+    }
+
+    public Vector2I GetGridPosition()
     {
         return gridPosition;
     }
 
-    public void setTileData(TileData data)
+    public void SetTileData(TileData data)
     {
         this.data = data;
     }
 
-    public TileData getTileData()
+    public TileData GetTileData()
     {
         return data;
     }

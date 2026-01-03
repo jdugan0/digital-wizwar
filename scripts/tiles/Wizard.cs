@@ -1,6 +1,5 @@
-using Godot;
 using System;
+using Godot;
+
 [GlobalClass]
-public partial class Wizard : Moveable
-{
-}
+public partial class Wizard : Moveable { }

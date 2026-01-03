@@ -1,11 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkqwtr4rnmqrm"]
-
-[ext_resource type="Script" uid="uid://cjt7foetgyiha" path="res://scripts/GameManager.cs" id="1_iho50"]
-[ext_resource type="PackedScene" uid="uid://dm7vt7u2fmioa" path="res://scenes/Player.tscn" id="2_3wh16"]
+[gd_scene format=3 uid="uid://dkqwtr4rnmqrm"]
 
 [node name="LevelTest" type="Node2D"]
-script = ExtResource("1_iho50")
-gridScale = 40.0
-player = ExtResource("2_3wh16")
 
 [node name="Camera2D" type="Camera2D" parent="."]
