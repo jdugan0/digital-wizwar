@@ -25,6 +25,13 @@ public partial class TileViewManager : Node
         view.Sync(ts);
     }
 
+    public void ClearAll()
+    {
+        foreach (var v in views.Values)
+            v.QueueFree();
+        views.Clear();
+    }
+
     public void OnDespawned(int entityId)
     {
         if (!views.TryGetValue(entityId, out var view))

@@ -21,6 +21,13 @@ public sealed class GameState
         list.Add(entityId);
     }
 
+    public void Clear()
+    {
+        NextEntityId = 1;
+        Entities.Clear();
+        At.Clear();
+    }
+
     public void RemoveFromCell(Vector2I pos, int entityId)
     {
         if (!At.TryGetValue(pos, out var list))

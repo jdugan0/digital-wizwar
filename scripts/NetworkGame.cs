@@ -8,6 +8,7 @@ public partial class NetworkGame : Node
 
     public readonly GameState State = new();
     public readonly System.Collections.Generic.Dictionary<long, PlayerState> Players = new();
+    private ENetMultiplayerPeer peer;
 
     public override void _Ready()
     {
@@ -24,6 +25,47 @@ public partial class NetworkGame : Node
     private void OnPeerDisconnected(long id)
     {
         Players.Remove(id);
+    }
+
+    public void Host(int port, int maxClients)
+    {
+        ResetSession();
+
+        peer = new ENetMultiplayerPeer();
+        var err = peer.CreateServer(port, maxClients);
+        if (err != Error.Ok)
+            return;
+
+        Multiplayer.MultiplayerPeer = peer;
+        EnsurePlayer(Multiplayer.GetUniqueId());
+    }
+
+    public void Join(string address, int port)
+    {
+        ResetSession();
+
+        peer = new ENetMultiplayerPeer();
+        var err = peer.CreateClient(address, port);
+        if (err != Error.Ok)
+            return;
+
+        Multiplayer.MultiplayerPeer = peer;
+        EnsurePlayer(Multiplayer.GetUniqueId());
+    }
+
+    public void Leave()
+    {
+        ResetSession();
+        Multiplayer.MultiplayerPeer = null;
+        peer = null;
+        EnsurePlayer(Multiplayer.GetUniqueId());
+    }
+
+    private void ResetSession()
+    {
+        State.Clear();
+        Players.Clear();
+        ViewManager?.ClearAll();
     }
 
     private PlayerState EnsurePlayer(long peerId)
