@@ -5,6 +5,6 @@ public partial class WizardTile : TileData
 {
     public override void Populate(TileState state)
     {
-        state.Add(new Moveable { OwnerId = -1, MovementRemaining = 20 });
+        state.Add(new Moveable { MovementRemaining = 20 });
     }
 }

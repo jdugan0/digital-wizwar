@@ -4,6 +4,11 @@ public partial class TileView : Sprite2D
 {
     public int EntityId;
 
+    public void ApplyDefinition(TileData def)
+    {
+        Texture = def.Texture;
+    }
+
     public void Sync(TileState state)
     {
         GlobalPosition =

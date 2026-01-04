@@ -4,7 +4,7 @@ public static class GameLogic
     {
         return action switch
         {
-            SpawnAction a => SpawnSystem.TrySpawn(gs, a.DefId, a.Pos, a.OwnerId),
+            SpawnAction a => SpawnSystem.TrySpawn(gs, a.EntityId, a.DefId, a.Pos, a.OwnerId),
             MoveAction a => MovementSystem.TryMove(gs, a.EntityId, a.Dir, senderId),
             DespawnAction a => SpawnSystem.TryDespawn(gs, a.EntityId),
             _ => ApplyResult.Fail("Unknown action"),

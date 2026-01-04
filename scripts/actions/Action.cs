@@ -2,7 +2,7 @@ using Godot;
 
 public interface IAction { }
 
-public sealed record SpawnAction(string DefId, Vector2I Pos, long OwnerId) : IAction;
+public sealed record SpawnAction(int EntityId, string DefId, Vector2I Pos, long OwnerId) : IAction;
 
 public sealed record MoveAction(int EntityId, Vector2I Dir) : IAction;
 
