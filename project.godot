@@ -19,7 +19,6 @@ config/icon="res://icon.svg"
 
 Sceneswitcher="*res://levels/SceneSwitcher/Sceneswitcher.tscn"
 Audiomanager="*res://audio/Audiomanager.tscn"
-TileInitalizer="*res://scenes/TileInitalizer.tscn"
 
 [display]
 
