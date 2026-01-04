@@ -6,6 +6,8 @@ public sealed record SpawnAction(int EntityId, string DefId, Vector2I Pos, long 
 
 public sealed record MoveAction(int EntityId, Vector2I Dir) : IAction;
 
+public sealed record UndoAction(int EntityId) : IAction;
+
 public sealed record DespawnAction(int EntityId) : IAction;
 
 public readonly record struct ApplyResult(bool Ok, string Error)
