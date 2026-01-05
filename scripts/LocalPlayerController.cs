@@ -5,23 +5,25 @@ public partial class LocalPlayerController : Node
     [Export]
     public NetworkGame Game;
 
+    public int SelectedTileEntityId;
+
     public override void _Process(double delta)
     {
         var localId = Multiplayer.GetUniqueId();
         if (!Game.Players.TryGetValue(localId, out var playerState))
             return;
 
-        if (playerState.SelectedTileEntityId == 0)
+        if (SelectedTileEntityId == 0)
             return;
         Vector2I dir = HandleMove();
         if (dir != Vector2I.Zero)
         {
-            var action = new MoveAction(playerState.SelectedTileEntityId, dir);
+            var action = new MoveAction(SelectedTileEntityId, dir);
             SendAction(action);
         }
         else if (Input.IsActionJustPressed("UNDO"))
         {
-            var action = new UndoAction(playerState.SelectedTileEntityId);
+            var action = new UndoAction(SelectedTileEntityId);
             SendAction(action);
         }
     }

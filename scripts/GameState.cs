@@ -40,10 +40,4 @@ public sealed class GameState
         if (list.Count == 0)
             At.Remove(pos);
     }
-
-    public void EnsureNextIdAtLeast(int idPlusOne)
-    {
-        if (NextEntityId < idPlusOne)
-            NextEntityId = idPlusOne;
-    }
 }

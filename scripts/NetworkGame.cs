@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using GD = Godot.Collections.Dictionary;
 
@@ -68,12 +69,35 @@ public partial class NetworkGame : Node
         ViewManager?.ClearAll();
     }
 
+    public void StartGame()
+    {
+        if (!Multiplayer.IsServer())
+            return;
+
+        var all = new List<long> { Multiplayer.GetUniqueId() };
+        foreach (var id in Multiplayer.GetPeers())
+            all.Add(id);
+
+        foreach (var peerId in all)
+        {
+            int entityId = State.NextEntityId++;
+            var a = new SpawnAction(entityId, "Wizard", new Vector2I(0, 0), peerId);
+
+            var res = GameLogic.Apply(State, a, 0);
+            if (!res.Ok)
+                continue;
+
+            ViewManager.OnSpawned(State, a.EntityId);
+            Rpc(nameof(RpcApplyAction), ActionCodec.ToEnvelope(a));
+        }
+    }
+
     private PlayerState EnsurePlayer(long peerId)
     {
         if (Players.TryGetValue(peerId, out var ps))
             return ps;
 
-        ps = new PlayerState { PeerId = peerId, SelectedTileEntityId = 0 };
+        ps = new PlayerState { PeerId = peerId };
         Players[peerId] = ps;
         return ps;
     }
