@@ -38,13 +38,18 @@ gridScale = 40.0
 script = ExtResource("4_eu8vo")
 tileDataList = Array[ExtResource("5_y0s4v")]([SubResource("Resource_sop0g")])
 
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("Game") groups=["PlayerController"]]
+script = ExtResource("8_sop0g")
+Game = NodePath("../Network")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.041
+anchor_bottom = 0.12100001
+offset_right = 13.279999
+offset_bottom = 23.319992
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -77,10 +82,6 @@ offset_top = 89.0
 offset_right = 51.0
 offset_bottom = 120.0
 text = "Start"
-
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("Game") groups=["PlayerController"]]
-script = ExtResource("8_sop0g")
-Game = NodePath("../Network")
 
 [connection signal="pressed" from="CanvasLayer/Control/Button" to="Network" method="Host" binds= [7777, 4]]
 [connection signal="pressed" from="CanvasLayer/Control/Button2" to="Network" method="Join" binds= ["localhost", 7777]]
