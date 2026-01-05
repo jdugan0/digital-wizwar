@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkqwtr4rnmqrm"]
+[gd_scene load_steps=11 format=3 uid="uid://dkqwtr4rnmqrm"]
 
 [ext_resource type="Script" uid="uid://dpdpi6h67t2sv" path="res://scripts/NetworkGame.cs" id="1_iho50"]
 [ext_resource type="Script" uid="uid://dqtmoh6iok0w8" path="res://scripts/TileViewManager.cs" id="2_3wh16"]
 [ext_resource type="Script" uid="uid://b0daseqy64np3" path="res://scripts/WorldData.cs" id="3_4w0vo"]
+[ext_resource type="PackedScene" uid="uid://cq158x5fr8rl2" path="res://scenes/Tile.tscn" id="3_tt56a"]
 [ext_resource type="Script" uid="uid://dkywjpsihtg3k" path="res://scripts/TileDatabase.cs" id="4_eu8vo"]
 [ext_resource type="Script" uid="uid://1dk8arnxdpe7" path="res://scripts/TileData.cs" id="5_y0s4v"]
 [ext_resource type="Script" uid="uid://ig24mq0abbjv" path="res://scripts/tiles/WizardTile.cs" id="6_tt56a"]
+[ext_resource type="Script" uid="uid://b8ye8jupapsj" path="res://scripts/LocalPlayerController.cs" id="8_sop0g"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y0s4v"]
 size = Vector2(40, 40)
@@ -20,11 +22,13 @@ metadata/_custom_type_script = "uid://ig24mq0abbjv"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Network" type="Node" parent="."]
+[node name="Network" type="Node" parent="." node_paths=PackedStringArray("ViewManager")]
 script = ExtResource("1_iho50")
+ViewManager = NodePath("../ViewManager")
 
 [node name="ViewManager" type="Node" parent="."]
 script = ExtResource("2_3wh16")
+TileViewScene = ExtResource("3_tt56a")
 
 [node name="WorldData" type="Node" parent="."]
 script = ExtResource("3_4w0vo")
@@ -66,6 +70,19 @@ offset_right = 42.0
 offset_bottom = 87.0
 text = "Leave"
 
+[node name="Button4" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 89.0
+offset_right = 51.0
+offset_bottom = 120.0
+text = "Start"
+
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("Game") groups=["PlayerController"]]
+script = ExtResource("8_sop0g")
+Game = NodePath("../Network")
+
 [connection signal="pressed" from="CanvasLayer/Control/Button" to="Network" method="Host" binds= [7777, 4]]
 [connection signal="pressed" from="CanvasLayer/Control/Button2" to="Network" method="Join" binds= ["localhost", 7777]]
 [connection signal="pressed" from="CanvasLayer/Control/Button3" to="Network" method="Leave"]
+[connection signal="pressed" from="CanvasLayer/Control/Button4" to="Network" method="StartGame"]

@@ -10,11 +10,14 @@ public partial class TileViewManager : Node
 
     public void OnSpawned(GameState gs, int entityId)
     {
+        GD.Print("bang1");
         if (views.ContainsKey(entityId))
             return;
 
         if (!gs.Entities.TryGetValue(entityId, out var ts))
             return;
+
+        GD.Print("bang");
 
         var def = TileDatabase.instance.Get(ts.DefId);
         var view = TileViewScene.Instantiate<TileView>();

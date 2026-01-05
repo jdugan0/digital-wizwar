@@ -8,8 +8,8 @@ public static class ActionCodecBootstrap
         ActionCodec.Register<SpawnAction>(
             nameof(SpawnAction),
             d => new SpawnAction(
-                (int)d["entityId"],
                 (string)d["defId"],
+                (int)d["entityId"],
                 (Vector2I)d["pos"],
                 (long)d["ownerId"]
             ),

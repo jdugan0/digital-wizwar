@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Godot;
-using GD = Godot.Collections.Dictionary;
+using GDD = Godot.Collections.Dictionary;
 
 public partial class NetworkGame : Node
 {
@@ -8,7 +9,7 @@ public partial class NetworkGame : Node
     public TileViewManager ViewManager;
 
     public readonly GameState State = new();
-    public readonly System.Collections.Generic.Dictionary<long, PlayerState> Players = new();
+    public readonly Dictionary<long, PlayerState> Players = new();
     private ENetMultiplayerPeer peer;
 
     public override void _Ready()
@@ -21,7 +22,11 @@ public partial class NetworkGame : Node
         EnsurePlayer(Multiplayer.GetUniqueId());
     }
 
-    private void OnPeerConnected(long id) => EnsurePlayer(id);
+    private void OnPeerConnected(long id)
+    {
+        EnsurePlayer(id);
+        GD.Print("Connected: " + id);
+    }
 
     private void OnPeerDisconnected(long id)
     {
@@ -73,22 +78,31 @@ public partial class NetworkGame : Node
     {
         if (!Multiplayer.IsServer())
             return;
-
         var all = new List<long> { Multiplayer.GetUniqueId() };
         foreach (var id in Multiplayer.GetPeers())
             all.Add(id);
-
+        GD.Print("ATTEMPT" + all.Count);
+        int count = 0;
         foreach (var peerId in all)
         {
-            int entityId = State.NextEntityId++;
-            var a = new SpawnAction(entityId, "Wizard", new Vector2I(0, 0), peerId);
+            GD.Print(count);
+            var a = new SpawnAction(
+                "WizardTile",
+                State.NextEntityId,
+                new Vector2I(count, 0),
+                peerId
+            );
 
             var res = GameLogic.Apply(State, a, 0);
             if (!res.Ok)
+            {
+                GD.Print(res.Error);
                 continue;
+            }
 
             ViewManager.OnSpawned(State, a.EntityId);
             Rpc(nameof(RpcApplyAction), ActionCodec.ToEnvelope(a));
+            count++;
         }
     }
 
@@ -103,7 +117,7 @@ public partial class NetworkGame : Node
     }
 
     [Rpc(MultiplayerApi.RpcMode.Authority)]
-    public void RpcSubmitAction(GD envelope)
+    public void RpcSubmitAction(GDD envelope)
     {
         var sender = Multiplayer.GetRemoteSenderId();
         var action = ActionCodec.FromEnvelope(envelope);
@@ -118,7 +132,7 @@ public partial class NetworkGame : Node
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void RpcApplyAction(GD envelope)
+    public void RpcApplyAction(GDD envelope)
     {
         if (Multiplayer.IsServer())
             return;
@@ -134,9 +148,11 @@ public partial class NetworkGame : Node
 
     private void ApplyViewDelta(IAction action)
     {
+        GD.Print("bang2");
         switch (action)
         {
             case SpawnAction a:
+                GD.Print("bang3");
                 ViewManager.OnSpawned(State, a.EntityId);
                 break;
             case DespawnAction a:

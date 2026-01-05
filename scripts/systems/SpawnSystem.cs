@@ -2,13 +2,17 @@ using Godot;
 
 public static class SpawnSystem
 {
-    public static ApplyResult TrySpawn(GameState gs, string defId, Vector2I pos, long ownerId)
+    public static ApplyResult TrySpawn(
+        GameState gs,
+        int entityId,
+        string defId,
+        Vector2I pos,
+        long ownerId
+    )
     {
         var def = TileDatabase.instance.Get(defId);
         if (def == null)
             return ApplyResult.Fail("Unknown DefId");
-
-        var entityId = gs.NextEntityId++;
         var ts = new TileState
         {
             EntityId = entityId,
@@ -24,6 +28,8 @@ public static class SpawnSystem
 
         gs.Entities[entityId] = ts;
         gs.AddToCell(pos, entityId);
+        if (gs.NextEntityId < entityId + 1)
+            gs.NextEntityId = entityId + 1;
 
         return ApplyResult.Success();
     }
