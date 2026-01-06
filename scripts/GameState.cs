@@ -10,6 +10,12 @@ public sealed class GameState
 
     public readonly Dictionary<long, PlayerState> Players = new();
 
+    public Godot.Collections.Array<long> turnOrder = new();
+
+    public int turnCount = 0;
+
+    public bool started = false;
+
     public IReadOnlyList<int> GetAt(Vector2I pos) =>
         At.TryGetValue(pos, out var list) ? list : System.Array.Empty<int>();
 

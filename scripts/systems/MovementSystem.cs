@@ -15,6 +15,8 @@ public static class MovementSystem
             return ApplyResult.Fail(
                 "Not your piece, sender: " + senderId + " owner: " + move.OwnerId
             );
+        if (gs.turnOrder[gs.turnCount % gs.turnOrder.Count] != senderId)
+            return ApplyResult.Fail("Not your turn.");
 
         if (move.MovementRemaining <= 0)
             return ApplyResult.Fail("No movement remaining");
@@ -40,6 +42,8 @@ public static class MovementSystem
         var move = ts.Get<Moveable>();
         if (move == null)
             return ApplyResult.Fail("Not moveable");
+        if (gs.turnOrder[gs.turnCount % gs.turnOrder.Count] != senderId)
+            return ApplyResult.Fail("Not your turn.");
 
         if (move.OwnerId != senderId)
             return ApplyResult.Fail("Not your piece");

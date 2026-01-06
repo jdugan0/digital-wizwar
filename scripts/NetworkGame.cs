@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Godot;
+using Godot.Collections;
 using GDD = Godot.Collections.Dictionary;
 
 public partial class NetworkGame : Node
@@ -74,7 +75,7 @@ public partial class NetworkGame : Node
 
     public void StartGame()
     {
-        if (!Multiplayer.IsServer())
+        if (!Multiplayer.IsServer() || State.started)
             return;
 
         var all = new List<long> { Multiplayer.GetUniqueId() };
@@ -90,8 +91,22 @@ public partial class NetworkGame : Node
                 peerId
             );
             Rpc(nameof(RpcSubmitAction), ActionCodec.ToEnvelope(a));
+            State.turnOrder.Add(peerId);
             count++;
         }
+        State.started = true;
+        Rpc(nameof(SetTurnOrder), State.turnOrder);
+    }
+
+    [Rpc(TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void SetTurnOrder(Array<long> turnOrder)
+    {
+        if (State.started || Multiplayer.IsServer())
+        {
+            return;
+        }
+        State.turnOrder = turnOrder;
+        State.started = true;
     }
 
     private PlayerState EnsurePlayer(long peerId)

@@ -30,6 +30,11 @@ public partial class LocalPlayerController : Node
             var action = new UndoAction(SelectedTileEntityId);
             SendAction(action);
         }
+        else if (Input.IsActionJustPressed("ENDTURN"))
+        {
+            var action = new NextTurnAction();
+            SendAction(action);
+        }
     }
 
     private void SendAction(IAction action)

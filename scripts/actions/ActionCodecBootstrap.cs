@@ -39,5 +39,11 @@ public static class ActionCodecBootstrap
             d => new DespawnAction((int)d["entityId"]),
             a => new GD { ["entityId"] = a.EntityId }
         );
+
+        ActionCodec.Register<NextTurnAction>(
+            nameof(NextTurnAction),
+            d => new NextTurnAction(),
+            a => new GD { }
+        );
     }
 }

@@ -8,6 +8,7 @@ public static class GameLogic
             MoveAction a => MovementSystem.TryMove(gs, a.EntityId, a.Dir, senderId),
             DespawnAction a => SpawnSystem.TryDespawn(gs, a.EntityId),
             UndoAction a => MovementSystem.TryUndo(gs, a.EntityId, senderId),
+            NextTurnAction a => TurnSystem.TryNextTurn(gs, senderId),
             _ => ApplyResult.Fail("Unknown action"),
         };
     }
