@@ -25,7 +25,6 @@ public static class SpawnSystem
         var owner = ts.Get<Moveable>();
         if (owner != null)
         {
-            GD.Print("OWNED BY: " + ownerId);
             owner.OwnerId = ownerId;
         }
 

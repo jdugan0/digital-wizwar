@@ -38,7 +38,6 @@ public partial class TileView : Area2D
 
     public void MouseEnter()
     {
-        GD.Print("moused!");
         mouse = true;
     }
 

@@ -10,7 +10,7 @@ public partial class LocalPlayerController : Node
     public override void _Process(double delta)
     {
         var localId = Multiplayer.GetUniqueId();
-        if (!Game.Players.TryGetValue(localId, out var playerState))
+        if (!Game.State.Players.TryGetValue(localId, out var playerState))
             return;
 
         if (SelectedTileEntityId == 0)

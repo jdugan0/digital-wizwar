@@ -81,27 +81,16 @@ public partial class NetworkGame : Node
         var all = new List<long> { Multiplayer.GetUniqueId() };
         foreach (var id in Multiplayer.GetPeers())
             all.Add(id);
-        GD.Print("ATTEMPT" + all.Count);
         int count = 0;
         foreach (var peerId in all)
         {
-            GD.Print(count);
             var a = new SpawnAction(
                 "WizardTile",
                 State.NextEntityId,
                 new Vector2I(count, 0),
                 peerId
             );
-
-            var res = GameLogic.Apply(State, a, 1);
-            if (!res.Ok)
-            {
-                GD.Print(res.Error);
-                continue;
-            }
-
-            ViewManager.OnSpawned(State, a.EntityId);
-            Rpc(nameof(RpcApplyAction), ActionCodec.ToEnvelope(a), 1);
+            Rpc(nameof(RpcSubmitAction), ActionCodec.ToEnvelope(a));
             count++;
         }
     }
@@ -121,7 +110,6 @@ public partial class NetworkGame : Node
     {
         if (!Multiplayer.IsServer())
             return;
-        GD.Print("Called Server");
         var sender = Multiplayer.GetRemoteSenderId();
         var action = ActionCodec.FromEnvelope(envelope);
 
@@ -142,7 +130,6 @@ public partial class NetworkGame : Node
     {
         if (Multiplayer.IsServer())
             return;
-        GD.Print("Called Local");
         var action = ActionCodec.FromEnvelope(envelope);
 
         var res = GameLogic.Apply(State, action, sender);
