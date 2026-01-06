@@ -12,7 +12,9 @@ public static class MovementSystem
             return ApplyResult.Fail("Not moveable");
 
         if (move.OwnerId != senderId)
-            return ApplyResult.Fail("Not your piece");
+            return ApplyResult.Fail(
+                "Not your piece, sender: " + senderId + " owner: " + move.OwnerId
+            );
 
         if (move.MovementRemaining <= 0)
             return ApplyResult.Fail("No movement remaining");

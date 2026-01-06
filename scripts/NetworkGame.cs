@@ -78,6 +78,7 @@ public partial class NetworkGame : Node
     {
         if (!Multiplayer.IsServer())
             return;
+
         var all = new List<long> { Multiplayer.GetUniqueId() };
         foreach (var id in Multiplayer.GetPeers())
             all.Add(id);
@@ -93,7 +94,7 @@ public partial class NetworkGame : Node
                 peerId
             );
 
-            var res = GameLogic.Apply(State, a, 0);
+            var res = GameLogic.Apply(State, a, 1);
             if (!res.Ok)
             {
                 GD.Print(res.Error);
@@ -101,7 +102,7 @@ public partial class NetworkGame : Node
             }
 
             ViewManager.OnSpawned(State, a.EntityId);
-            Rpc(nameof(RpcApplyAction), ActionCodec.ToEnvelope(a));
+            Rpc(nameof(RpcApplyAction), ActionCodec.ToEnvelope(a), 1);
             count++;
         }
     }
@@ -116,43 +117,50 @@ public partial class NetworkGame : Node
         return ps;
     }
 
-    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     public void RpcSubmitAction(GDD envelope)
     {
+        if (!Multiplayer.IsServer())
+            return;
+        GD.Print("Called Server");
         var sender = Multiplayer.GetRemoteSenderId();
         var action = ActionCodec.FromEnvelope(envelope);
 
         var res = GameLogic.Apply(State, action, sender);
         if (!res.Ok)
+        {
+            GD.Print(res.Error);
             return;
+        }
 
         ApplyViewDelta(action);
 
-        Rpc(nameof(RpcApplyAction), envelope);
+        Rpc(nameof(RpcApplyAction), envelope, sender);
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void RpcApplyAction(GDD envelope)
+    [Rpc]
+    public void RpcApplyAction(GDD envelope, int sender)
     {
         if (Multiplayer.IsServer())
             return;
-
+        GD.Print("Called Local");
         var action = ActionCodec.FromEnvelope(envelope);
 
-        var res = GameLogic.Apply(State, action, 0);
+        var res = GameLogic.Apply(State, action, sender);
         if (!res.Ok)
+        {
+            GD.Print(res.Error);
             return;
+        }
 
         ApplyViewDelta(action);
     }
 
     private void ApplyViewDelta(IAction action)
     {
-        GD.Print("bang2");
         switch (action)
         {
             case SpawnAction a:
-                GD.Print("bang3");
                 ViewManager.OnSpawned(State, a.EntityId);
                 break;
             case DespawnAction a:

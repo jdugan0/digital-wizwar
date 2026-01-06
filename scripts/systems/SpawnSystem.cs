@@ -22,9 +22,12 @@ public static class SpawnSystem
 
         def.Populate(ts);
 
-        var owner = ts.Get<HasOwner>();
+        var owner = ts.Get<Moveable>();
         if (owner != null)
+        {
+            GD.Print("OWNED BY: " + ownerId);
             owner.OwnerId = ownerId;
+        }
 
         gs.Entities[entityId] = ts;
         gs.AddToCell(pos, entityId);
