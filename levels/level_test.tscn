@@ -46,12 +46,12 @@ Game = NodePath("../Network")
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchor_right = 0.041
-anchor_bottom = 0.12100001
-offset_right = 13.279999
-offset_bottom = 23.319992
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Button" type="Button" parent="CanvasLayer/Control"]
 layout_mode = 0
