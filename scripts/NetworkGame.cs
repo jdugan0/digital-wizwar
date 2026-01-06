@@ -125,7 +125,7 @@ public partial class NetworkGame : Node
         Rpc(nameof(RpcApplyAction), envelope, sender);
     }
 
-    [Rpc]
+    [Rpc(TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void RpcApplyAction(GDD envelope, int sender)
     {
         if (Multiplayer.IsServer())
