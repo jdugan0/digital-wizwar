@@ -9,6 +9,10 @@ public partial class LocalPlayerController : Node
 
     public override void _Process(double delta)
     {
+        if (Multiplayer.MultiplayerPeer == null)
+        {
+            return;
+        }
         var localId = Multiplayer.GetUniqueId();
         if (!Game.State.Players.TryGetValue(localId, out var playerState))
             return;

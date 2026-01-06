@@ -63,7 +63,6 @@ public partial class NetworkGame : Node
         ResetSession();
         Multiplayer.MultiplayerPeer = null;
         peer = null;
-        EnsurePlayer(Multiplayer.GetUniqueId());
     }
 
     private void ResetSession()
@@ -105,7 +104,11 @@ public partial class NetworkGame : Node
         return ps;
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    [Rpc(
+        MultiplayerApi.RpcMode.AnyPeer,
+        CallLocal = true,
+        TransferMode = MultiplayerPeer.TransferModeEnum.Reliable
+    )]
     public void RpcSubmitAction(GDD envelope)
     {
         if (!Multiplayer.IsServer())
