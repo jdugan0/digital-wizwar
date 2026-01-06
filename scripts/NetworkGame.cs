@@ -9,7 +9,6 @@ public partial class NetworkGame : Node
     public TileViewManager ViewManager;
 
     public readonly GameState State = new();
-    public readonly Dictionary<long, PlayerState> Players = new();
     private ENetMultiplayerPeer peer;
 
     public override void _Ready()
@@ -30,7 +29,7 @@ public partial class NetworkGame : Node
 
     private void OnPeerDisconnected(long id)
     {
-        Players.Remove(id);
+        State.Players.Remove(id);
     }
 
     public void Host(int port, int maxClients)
@@ -70,7 +69,7 @@ public partial class NetworkGame : Node
     private void ResetSession()
     {
         State.Clear();
-        Players.Clear();
+        State.Players.Clear();
         ViewManager?.ClearAll();
     }
 
@@ -109,11 +108,11 @@ public partial class NetworkGame : Node
 
     private PlayerState EnsurePlayer(long peerId)
     {
-        if (Players.TryGetValue(peerId, out var ps))
+        if (State.Players.TryGetValue(peerId, out var ps))
             return ps;
 
         ps = new PlayerState { PeerId = peerId };
-        Players[peerId] = ps;
+        State.Players[peerId] = ps;
         return ps;
     }
 

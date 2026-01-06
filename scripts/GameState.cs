@@ -8,6 +8,8 @@ public sealed class GameState
     public readonly Dictionary<int, TileState> Entities = new();
     public readonly Dictionary<Vector2I, List<int>> At = new();
 
+    public readonly Dictionary<long, PlayerState> Players = new();
+
     public IReadOnlyList<int> GetAt(Vector2I pos) =>
         At.TryGetValue(pos, out var list) ? list : System.Array.Empty<int>();
 
