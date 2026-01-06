@@ -4,9 +4,16 @@ public static class GameLogic
     {
         return action switch
         {
-            SpawnAction a => SpawnSystem.TrySpawn(gs, a.EntityId, a.DefId, a.Pos, a.OwnerId),
+            SpawnAction a => SpawnSystem.TrySpawn(
+                gs,
+                a.EntityId,
+                a.DefId,
+                a.Pos,
+                a.OwnerId,
+                senderId
+            ),
             MoveAction a => MovementSystem.TryMove(gs, a.EntityId, a.Dir, senderId),
-            DespawnAction a => SpawnSystem.TryDespawn(gs, a.EntityId),
+            DespawnAction a => SpawnSystem.TryDespawn(gs, a.EntityId, senderId),
             UndoAction a => MovementSystem.TryUndo(gs, a.EntityId, senderId),
             NextTurnAction a => TurnSystem.TryNextTurn(gs, senderId),
             _ => ApplyResult.Fail("Unknown action"),

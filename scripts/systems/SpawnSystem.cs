@@ -7,9 +7,12 @@ public static class SpawnSystem
         int entityId,
         string defId,
         Vector2I pos,
-        long ownerId
+        long ownerId,
+        long senderId
     )
     {
+        if (senderId != 1)
+            return ApplyResult.Fail("Not server.");
         var def = TileDatabase.instance.Get(defId);
         if (def == null)
             return ApplyResult.Fail("Unknown DefId");
@@ -36,11 +39,12 @@ public static class SpawnSystem
         return ApplyResult.Success();
     }
 
-    public static ApplyResult TryDespawn(GameState gs, int entityId)
+    public static ApplyResult TryDespawn(GameState gs, int entityId, long senderId)
     {
         if (!gs.Entities.TryGetValue(entityId, out var ts))
             return ApplyResult.Fail("Unknown entity");
-
+        if (senderId != 1)
+            return ApplyResult.Fail("Not server.");
         gs.RemoveFromCell(ts.GridPos, entityId);
         gs.Entities.Remove(entityId);
 
