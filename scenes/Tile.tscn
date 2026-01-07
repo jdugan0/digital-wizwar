@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cq158x5fr8rl2"]
+[gd_scene load_steps=3 format=3 uid="uid://cq158x5fr8rl2"]
 
-[ext_resource type="Script" uid="uid://2uyeo5vknspu" path="res://scripts/Tile.cs" id="1_2sjy5"]
+[ext_resource type="Script" uid="uid://drtn18aikv3g7" path="res://scripts/TileView.cs" id="1_2sjy5"]
 
-[node name="Tile" type="Sprite2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2sjy5"]
+size = Vector2(40, 40)
+
+[node name="Tile" type="Area2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_2sjy5")
+sprite = NodePath("Sprite")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2sjy5")
+
+[connection signal="mouse_entered" from="." to="." method="MouseEnter"]
+[connection signal="mouse_exited" from="." to="." method="MouseExit"]
