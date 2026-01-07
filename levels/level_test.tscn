@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dkqwtr4rnmqrm"]
+[gd_scene load_steps=16 format=3 uid="uid://dkqwtr4rnmqrm"]
 
 [ext_resource type="Script" uid="uid://dpdpi6h67t2sv" path="res://scripts/NetworkGame.cs" id="1_iho50"]
 [ext_resource type="Script" uid="uid://dqtmoh6iok0w8" path="res://scripts/TileViewManager.cs" id="2_3wh16"]
@@ -7,25 +7,48 @@
 [ext_resource type="Script" uid="uid://dkywjpsihtg3k" path="res://scripts/TileDatabase.cs" id="4_eu8vo"]
 [ext_resource type="Script" uid="uid://1dk8arnxdpe7" path="res://scripts/TileData.cs" id="5_y0s4v"]
 [ext_resource type="Script" uid="uid://ig24mq0abbjv" path="res://scripts/tiles/WizardTile.cs" id="6_tt56a"]
+[ext_resource type="Texture2D" uid="uid://2wo50wo11hag" path="res://art/square.tres" id="7_cd850"]
 [ext_resource type="Script" uid="uid://b8ye8jupapsj" path="res://scripts/LocalPlayerController.cs" id="8_sop0g"]
 [ext_resource type="Script" uid="uid://4r6e7640ib4d" path="res://scripts/tiles/WallTile.cs" id="8_vac4a"]
+[ext_resource type="Texture2D" uid="uid://dnmdxwd773ow6" path="res://art/rect.tres" id="9_gcim3"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y0s4v"]
-size = Vector2(40, 40)
+[sub_resource type="SpriteFrames" id="SpriteFrames_vac4a"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"WALL_NORMAL",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_cd850")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="Resource" id="Resource_sop0g"]
 script = ExtResource("6_tt56a")
 Id = "WizardTile"
-Texture = SubResource("PlaceholderTexture2D_y0s4v")
+SpriteFrames = SubResource("SpriteFrames_vac4a")
 metadata/_custom_type_script = "uid://ig24mq0abbjv"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vac4a"]
-size = Vector2(40, 10)
+[sub_resource type="SpriteFrames" id="SpriteFrames_cd850"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_gcim3")
+}],
+"loop": true,
+"name": &"WALL_NORMAL",
+"speed": 5.0
+}]
 
 [sub_resource type="Resource" id="Resource_cd850"]
 script = ExtResource("8_vac4a")
 Id = "WallTile"
-Texture = SubResource("PlaceholderTexture2D_vac4a")
+SpriteFrames = SubResource("SpriteFrames_cd850")
 metadata/_custom_type_script = "uid://4r6e7640ib4d"
 
 [node name="LevelTest" type="Node2D"]

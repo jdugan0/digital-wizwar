@@ -8,7 +8,7 @@ public partial class TileData : Resource
     public string Id;
 
     [Export]
-    public Texture2D Texture;
+    public SpriteFrames SpriteFrames;
 
     public virtual void Populate(TileState state) { }
 

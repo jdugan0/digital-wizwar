@@ -15,6 +15,7 @@ public partial class WallTile : TileData
         var dir = (int)init["direction"];
         state.Get<Blocking>().direction = dir;
 
-        //setup the texture. MEOW!
+        string id = (string)init["texture"];
+        state.AnimationName = id;
     }
 }

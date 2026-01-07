@@ -8,6 +8,8 @@ public sealed class TileState
     public string DefId;
     public Vector2I GridPos;
 
+    public string AnimationName = "default";
+
     private readonly Dictionary<Type, IComponent> components = new();
 
     public void Add<T>(T component)

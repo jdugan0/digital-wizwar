@@ -9,7 +9,7 @@ size = Vector2(40, 40)
 script = ExtResource("1_2sjy5")
 sprite = NodePath("Sprite")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_2sjy5")

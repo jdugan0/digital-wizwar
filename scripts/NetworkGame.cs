@@ -106,7 +106,7 @@ public partial class NetworkGame : Node
             "WallTile",
             State.NextEntityId,
             new Vector2I(1, 1),
-            new GDD { ["direction"] = Blocking.DOWN }
+            new GDD { ["direction"] = Blocking.DOWN, ["texture"] = "WALL_NORMAL" }
         );
 
         Rpc(nameof(RpcSubmitAction), ActionCodec.ToEnvelope(a));

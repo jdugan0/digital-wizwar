@@ -5,7 +5,7 @@ public partial class TileView : Area2D
     public int EntityId;
 
     [Export]
-    Sprite2D sprite;
+    AnimatedSprite2D sprite;
 
     bool mouse;
 
@@ -19,7 +19,7 @@ public partial class TileView : Area2D
 
     public void ApplyDefinition(TileData def)
     {
-        sprite.Texture = def.Texture;
+        sprite.SpriteFrames = def.SpriteFrames;
     }
 
     public void Sync(TileState state)
@@ -27,6 +27,7 @@ public partial class TileView : Area2D
         GlobalPosition =
             new Vector2(state.GridPos.X, state.GridPos.Y) * WorldData.instance.gridScale
             - WorldData.instance.origin;
+        sprite.Animation = state.AnimationName;
     }
 
     public void OnClick()

@@ -16,7 +16,6 @@ public partial class TileViewManager : Node
         if (!gs.Entities.TryGetValue(entityId, out var ts))
             return;
 
-
         var def = TileDatabase.instance.Get(ts.DefId);
         var view = TileViewScene.Instantiate<TileView>();
         view.EntityId = entityId;
