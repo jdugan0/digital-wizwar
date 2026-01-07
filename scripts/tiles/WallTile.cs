@@ -12,7 +12,7 @@ public partial class WallTile : TileData
 
     public override void Init(TileState state, Dictionary init)
     {
-        var dir = (Vector2I)init["direction"];
+        var dir = (int)init["direction"];
         state.Get<Blocking>().direction = dir;
 
         //setup the texture. MEOW!

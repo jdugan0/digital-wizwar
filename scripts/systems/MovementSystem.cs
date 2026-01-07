@@ -27,7 +27,7 @@ public static class MovementSystem
             Blocking b = gs.Entities[id].Get<Blocking>();
             if (b == null)
                 continue;
-            if (b.direction == dir && b.movementBlocking)
+            if (b.direction == Blocking.VecToDir(dir) && b.movementBlocking)
                 return ApplyResult.Fail("Blocked");
         }
 
