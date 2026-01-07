@@ -11,14 +11,14 @@ public static class ActionCodecBootstrap
                 (string)d["defId"],
                 (int)d["entityId"],
                 (Vector2I)d["pos"],
-                (long)d["ownerId"]
+                (GD)d["init"]
             ),
             a => new GD
             {
                 ["entityId"] = a.EntityId,
                 ["defId"] = a.DefId,
                 ["pos"] = a.Pos,
-                ["ownerId"] = a.OwnerId,
+                ["init"] = a.Init,
             }
         );
 

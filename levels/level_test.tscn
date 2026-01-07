@@ -70,9 +70,9 @@ text = "Join"
 [node name="Button3" type="Button" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = -2.0
-offset_top = 56.0
-offset_right = 42.0
-offset_bottom = 87.0
+offset_top = 60.0
+offset_right = 51.0
+offset_bottom = 91.0
 text = "Leave"
 
 [node name="Button4" type="Button" parent="CanvasLayer/Control"]

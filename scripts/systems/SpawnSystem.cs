@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 public static class SpawnSystem
 {
@@ -7,8 +8,8 @@ public static class SpawnSystem
         int entityId,
         string defId,
         Vector2I pos,
-        long ownerId,
-        long senderId
+        long senderId,
+        Dictionary init
     )
     {
         if (senderId != 1)
@@ -25,11 +26,7 @@ public static class SpawnSystem
 
         def.Populate(ts);
 
-        var owner = ts.Get<Moveable>();
-        if (owner != null)
-        {
-            owner.OwnerId = ownerId;
-        }
+        def.Init(ts, init);
 
         gs.Entities[entityId] = ts;
         gs.AddToCell(pos, entityId);

@@ -1,8 +1,10 @@
 using Godot;
+using Godot.Collections;
 
 public interface IAction { }
 
-public sealed record SpawnAction(string DefId, int EntityId, Vector2I Pos, long OwnerId) : IAction;
+public sealed record SpawnAction(string DefId, int EntityId, Vector2I Pos, Dictionary Init)
+    : IAction;
 
 public sealed record MoveAction(int EntityId, Vector2I Dir) : IAction;
 

@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class TileData : Resource
@@ -10,4 +11,6 @@ public partial class TileData : Resource
     public Texture2D Texture;
 
     public virtual void Populate(TileState state) { }
+
+    public virtual void Init(TileState state, Dictionary init) { }
 }

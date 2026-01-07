@@ -88,7 +88,7 @@ public partial class NetworkGame : Node
                 "WizardTile",
                 State.NextEntityId,
                 new Vector2I(count, 0),
-                peerId
+                new Dictionary { ["ownerId"] = peerId }
             );
             Rpc(nameof(RpcSubmitAction), ActionCodec.ToEnvelope(a));
             State.turnOrder.Add(peerId);
