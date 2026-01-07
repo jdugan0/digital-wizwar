@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dkqwtr4rnmqrm"]
+[gd_scene load_steps=14 format=3 uid="uid://dkqwtr4rnmqrm"]
 
 [ext_resource type="Script" uid="uid://dpdpi6h67t2sv" path="res://scripts/NetworkGame.cs" id="1_iho50"]
 [ext_resource type="Script" uid="uid://dqtmoh6iok0w8" path="res://scripts/TileViewManager.cs" id="2_3wh16"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://1dk8arnxdpe7" path="res://scripts/TileData.cs" id="5_y0s4v"]
 [ext_resource type="Script" uid="uid://ig24mq0abbjv" path="res://scripts/tiles/WizardTile.cs" id="6_tt56a"]
 [ext_resource type="Script" uid="uid://b8ye8jupapsj" path="res://scripts/LocalPlayerController.cs" id="8_sop0g"]
+[ext_resource type="Script" uid="uid://4r6e7640ib4d" path="res://scripts/tiles/WallTile.cs" id="8_vac4a"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y0s4v"]
 size = Vector2(40, 40)
@@ -17,6 +18,15 @@ script = ExtResource("6_tt56a")
 Id = "WizardTile"
 Texture = SubResource("PlaceholderTexture2D_y0s4v")
 metadata/_custom_type_script = "uid://ig24mq0abbjv"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vac4a"]
+size = Vector2(40, 10)
+
+[sub_resource type="Resource" id="Resource_cd850"]
+script = ExtResource("8_vac4a")
+Id = "WallTile"
+Texture = SubResource("PlaceholderTexture2D_vac4a")
+metadata/_custom_type_script = "uid://4r6e7640ib4d"
 
 [node name="LevelTest" type="Node2D"]
 
@@ -36,7 +46,7 @@ gridScale = 40.0
 
 [node name="TileDatabase" type="Node" parent="."]
 script = ExtResource("4_eu8vo")
-tileDataList = Array[ExtResource("5_y0s4v")]([SubResource("Resource_sop0g")])
+tileDataList = Array[ExtResource("5_y0s4v")]([SubResource("Resource_sop0g"), SubResource("Resource_cd850")])
 
 [node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("Game") groups=["PlayerController"]]
 script = ExtResource("8_sop0g")

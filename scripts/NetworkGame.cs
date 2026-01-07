@@ -94,8 +94,22 @@ public partial class NetworkGame : Node
             State.turnOrder.Add(peerId);
             count++;
         }
+
+        MakeBoard();
         State.started = true;
         Rpc(nameof(SetTurnOrder), State.turnOrder);
+    }
+
+    private void MakeBoard()
+    {
+        var a = new SpawnAction(
+            "WallTile",
+            State.NextEntityId,
+            new Vector2I(1, 1),
+            new Dictionary { ["direction"] = Vector2.Down }
+        );
+
+        Rpc(nameof(RpcSubmitAction), ActionCodec.ToEnvelope(a));
     }
 
     [Rpc(TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
