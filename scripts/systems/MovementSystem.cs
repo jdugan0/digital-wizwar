@@ -20,9 +20,16 @@ public static class MovementSystem
 
         if (move.MovementRemaining <= 0)
             return ApplyResult.Fail("No movement remaining");
-
         var from = ts.GridPos;
         var to = from + dir;
+        foreach (int id in gs.GetAt(to))
+        {
+            Blocking b = gs.Entities[id].Get<Blocking>();
+            if (b == null)
+                continue;
+            if (b.direction == dir && b.movementBlocking)
+                return ApplyResult.Fail("Blocked");
+        }
 
         move.History.Add(from);
         move.MovementRemaining--;
