@@ -22,7 +22,7 @@ public static class MovementSystem
             return ApplyResult.Fail("No movement remaining");
         var from = ts.GridPos;
         var to = from + dir;
-        foreach (int id in gs.GetAt(to))
+        foreach (int id in gs.GetAt(from))
         {
             Blocking b = gs.Entities[id].Get<Blocking>();
             if (b == null)

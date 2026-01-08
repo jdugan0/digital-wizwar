@@ -9,6 +9,9 @@ public partial class NetworkGame : Node
     [Export]
     public TileViewManager ViewManager;
 
+    [Export]
+    private PackedScene board;
+
     public readonly GameState State = new();
     private ENetMultiplayerPeer peer;
 
@@ -102,13 +105,8 @@ public partial class NetworkGame : Node
 
     private void MakeBoard()
     {
-        var a = new SpawnAction(
-            "WallTile",
-            State.NextEntityId,
-            new Vector2I(1, 1),
-            new GDD { ["direction"] = Blocking.DOWN, ["texture"] = "WALL_NORMAL" }
-        );
-
+        TileMapLayer board = WorldData.instance.Board.Instantiate<TileMapLayer>();
+        var a = new SpawnBoardAction(State.NextEntityId, Vector2I.Up, board.GetUsedCells().Count);
         Rpc(nameof(RpcSubmitAction), ActionCodec.ToEnvelope(a));
     }
 
@@ -180,6 +178,12 @@ public partial class NetworkGame : Node
         {
             case SpawnAction a:
                 ViewManager.OnSpawned(State, a.EntityId);
+                break;
+            case SpawnBoardAction a:
+                for (int i = 0; i < a.count; i++)
+                {
+                    ViewManager.OnSpawned(State, a.initalEntityId + i);
+                }
                 break;
             case DespawnAction a:
                 ViewManager.OnDespawned(a.EntityId);

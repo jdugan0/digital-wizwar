@@ -9,6 +9,13 @@ public static class GameLogic
             DespawnAction a => SpawnSystem.TryDespawn(gs, a.EntityId, senderId),
             UndoAction a => MovementSystem.TryUndo(gs, a.EntityId, senderId),
             NextTurnAction a => TurnSystem.TryNextTurn(gs, senderId),
+            SpawnBoardAction a => SpawnSystem.TrySpawnBoard(
+                gs,
+                a.initalEntityId,
+                a.Pos,
+                senderId,
+                a.count
+            ),
             _ => ApplyResult.Fail("Unknown action"),
         };
     }

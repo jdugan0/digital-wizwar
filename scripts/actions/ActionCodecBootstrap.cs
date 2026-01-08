@@ -22,6 +22,17 @@ public static class ActionCodecBootstrap
             }
         );
 
+        ActionCodec.Register<SpawnBoardAction>(
+            nameof(SpawnBoardAction),
+            d => new SpawnBoardAction((int)d["entityId"], (Vector2I)d["pos"], (int)d["count"]),
+            a => new GD
+            {
+                ["entityId"] = a.initalEntityId,
+                ["pos"] = a.Pos,
+                ["count"] = a.count,
+            }
+        );
+
         ActionCodec.Register<MoveAction>(
             nameof(MoveAction),
             d => new MoveAction((int)d["entityId"], (Vector2I)d["dir"]),

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://drtn18aikv3g7" path="res://scripts/TileView.cs" id="1_2sjy5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2sjy5"]
-size = Vector2(40, 40)
+size = Vector2(400, 400)
 
 [node name="Tile" type="Area2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_2sjy5")

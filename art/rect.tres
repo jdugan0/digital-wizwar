@@ -1,4 +1,4 @@
 [gd_resource type="PlaceholderTexture2D" format=3 uid="uid://dnmdxwd773ow6"]
 
 [resource]
-size = Vector2(40, 10)
+size = Vector2(400, 40)

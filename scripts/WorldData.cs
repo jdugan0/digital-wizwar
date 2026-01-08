@@ -8,6 +8,8 @@ public partial class WorldData : Node
     [Export]
     public float gridScale;
 
+    [Export]
+    public PackedScene Board;
     public static WorldData instance;
 
     public override void _Ready()
