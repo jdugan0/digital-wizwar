@@ -28,6 +28,7 @@ public partial class TileView : Area2D
             new Vector2(state.GridPos.X, state.GridPos.Y) * WorldData.instance.gridScale
             - WorldData.instance.origin;
         sprite.Animation = state.AnimationName;
+        sprite.Rotation = state.RotationRadians;
     }
 
     public void OnClick()

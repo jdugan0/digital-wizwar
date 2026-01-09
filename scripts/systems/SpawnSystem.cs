@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -53,6 +54,7 @@ public static class SpawnSystem
         bool h = layer.IsCellFlippedH(cell);
         bool v = layer.IsCellFlippedV(cell);
         bool t = layer.IsCellTransposed(cell);
+
         if (!t)
         {
             if (!h && !v)
@@ -63,9 +65,9 @@ public static class SpawnSystem
         }
         else
         {
-            if (!h && v)
-                return (90, false);
             if (h && !v)
+                return (90, false);
+            if (!h && v)
                 return (270, false);
             return (0, true);
         }
@@ -94,9 +96,9 @@ public static class SpawnSystem
                 int rot = Mathf.RoundToInt(deg / 90.0f) % 4;
                 init.Add(
                     "direction",
-                    Blocking.RotateDir((int)tileData.GetCustomData("direction"), rot)
+                    Blocking.RotateDir((int)tileData.GetCustomData("direction"), -rot)
                 );
-                init.Add("texture", "WALL_NORMAL");
+                init.Add("rotation_radians", Mathf.DegToRad(deg));
             }
             var r = TrySpawn(gs, entityId, defId, cell + Pos, senderId, init);
             entityId = gs.NextEntityId;

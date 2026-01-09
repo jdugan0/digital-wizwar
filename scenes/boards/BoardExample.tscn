@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bm1v7iak02got"]
+[gd_scene load_steps=4 format=4 uid="uid://bm1v7iak02got"]
 
 [ext_resource type="Texture2D" uid="uid://b8q22rhh4xu43" path="res://art/boards/boardWalls.png" id="1_282wo"]
 
@@ -63,5 +63,5 @@ custom_data_layer_1/type = 4
 sources/3 = SubResource("TileSetAtlasSource_282wo")
 
 [node name="BoardExample" type="TileMapLayer"]
-tile_map_data = PackedByteArray(0, 0, 1, 0, 0, 0, 3, 0, 1, 0, 1, 0, 0, 80, 0, 0, 255, 255, 3, 0, 1, 0, 1, 0, 0, 96, 1, 0, 255, 255, 3, 0, 1, 0, 1, 0, 0, 48)
+tile_map_data = PackedByteArray("AAAAAAAAAwABAAEAAGD//wAAAwABAAEAAFD///7/AwABAAEAAFAAAP7/AwABAAEAAGACAP//AwABAAEAAAACAP7/AwABAAEAADA=")
 tile_set = SubResource("TileSet_sdi6n")
