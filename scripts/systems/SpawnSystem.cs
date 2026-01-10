@@ -37,6 +37,26 @@ public static class SpawnSystem
         return ApplyResult.Success();
     }
 
+    public static string GetCellAnimName(
+        TileMapLayer layer,
+        Vector2I cell,
+        string animPrefix = "tile"
+    )
+    {
+        int sourceId = layer.GetCellSourceId(cell);
+        if (sourceId < 0)
+            return null;
+
+        var source = layer.TileSet.GetSource(sourceId);
+        if (source is not TileSetAtlasSource)
+            return null;
+
+        Vector2I atlasCoords = layer.GetCellAtlasCoords(cell);
+        int altId = layer.GetCellAlternativeTile(cell);
+
+        return $"{animPrefix}_{sourceId}_{atlasCoords.X}_{atlasCoords.Y}_{0}";
+    }
+
     public static ApplyResult TryDespawn(GameState gs, int entityId, long senderId)
     {
         if (!gs.Entities.TryGetValue(entityId, out var ts))
@@ -77,8 +97,7 @@ public static class SpawnSystem
         GameState gs,
         int initalEntityId,
         Vector2I Pos,
-        long senderId,
-        int count
+        long senderId
     )
     {
         TileMapLayer board = WorldData.instance.Board.Instantiate<TileMapLayer>();
@@ -99,6 +118,7 @@ public static class SpawnSystem
                     Blocking.RotateDir((int)tileData.GetCustomData("direction"), -rot)
                 );
                 init.Add("rotation_radians", Mathf.DegToRad(deg));
+                init.Add("anim_name", GetCellAnimName(board, cell));
             }
             var r = TrySpawn(gs, entityId, defId, cell + Pos, senderId, init);
             entityId = gs.NextEntityId;

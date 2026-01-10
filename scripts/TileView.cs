@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using Godot.Collections;
 
 public partial class TileView : Area2D
 {
@@ -6,7 +8,6 @@ public partial class TileView : Area2D
 
     [Export]
     AnimatedSprite2D sprite;
-
     bool mouse;
 
     public override void _Process(double delta)
@@ -17,16 +18,12 @@ public partial class TileView : Area2D
         }
     }
 
-    public void ApplyDefinition(TileData def)
-    {
-        sprite.SpriteFrames = def.SpriteFrames;
-    }
-
     public void Sync(TileState state)
     {
         GlobalPosition =
             new Vector2(state.GridPos.X, state.GridPos.Y) * WorldData.instance.gridScale
             - WorldData.instance.origin;
+        sprite.SpriteFrames = TileViewManager.instance.spriteFrames[state.DefId];
         sprite.Animation = state.AnimationName;
         sprite.Rotation = state.RotationRadians;
     }
